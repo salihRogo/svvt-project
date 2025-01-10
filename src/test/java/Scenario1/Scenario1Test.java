@@ -41,13 +41,12 @@ public class Scenario1Test {
         WebElement nameAndSurnameInputField = webDriver.findElement(By.id("user-name"));
         nameAndSurnameInputField.sendKeys("Mirna Ljiljic");
 
-        WebElement submitSignUpButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button"));
-        js.executeScript("arguments[0].scrollIntoView(true)", submitSignUpButton);
+        js.executeScript("window.scrollBy(0,400)", "");
 
         Thread.sleep(1000);
 
         WebElement emailInputField = webDriver.findElement(By.id("user-email"));
-        emailInputField.sendKeys("salihrogo18@gmail.com");
+        emailInputField.sendKeys("abababab@gmail.com");
         Thread.sleep(1000);
 
         WebElement phoneInputField = webDriver.findElement(By.id("user-phone"));
@@ -74,11 +73,18 @@ public class Scenario1Test {
         repeatPasswordInputField.sendKeys("Mirnanemirna1");
         Thread.sleep(1000);
 
+        js.executeScript("window.scrollBy(0,200)", "");
+        Thread.sleep(1000);
 
+        WebElement submitSignUpButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button"));
         submitSignUpButton.click();
-        Thread.sleep(2000);
+        Thread.sleep(6000);
 
         assertEquals("https://www.univerzalno.com/", webDriver.getCurrentUrl());
+
+        WebElement closeModal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button"));
+        closeModal.click();
+        Thread.sleep(3000);
     }
 
 

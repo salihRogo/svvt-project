@@ -23,7 +23,7 @@ public class Scenario4Test {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
 
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -44,19 +44,22 @@ public class Scenario4Test {
         String[] links = {
                 "mobiteli",
                 "oprema-za-mobitele-i-tablete",
-                "kućanski-aparati",
-                "laptopi-pc-i-oprema",
+                "kucanski-aparati",
+                "laptop-pc-i-oprema",
                 "tv-i-oprema",
                 "multimedija",
                 "auto-oprema",
                 "foto-i-kamere",
-                "kućna-i-radna-oprema",
-                "rekreacija-i-avantura"
+                "kucne-i-kancelarijske-potrepstine",
+                "sport-putovanje-i-slobodno-vrijeme"
         };
+
+        int i = 1;
 
         for(String link : links){
             String finalUrl = baseUrl + "bs/" + link;
-            webDriver.findElement(By.className("level-1")).click();
+            webDriver.findElement(By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")).click();
+            i++;
 
             try {
                 Thread.sleep(1000);
@@ -65,6 +68,43 @@ public class Scenario4Test {
             }
             assertEquals(finalUrl, webDriver.getCurrentUrl());
         }
+        Thread.sleep(2000);
+    }
+
+    @Test
+    public void testNavigationFailed() throws InterruptedException {
+        webDriver.get(baseUrl);
+        webDriver.manage().window().maximize();
+        Thread.sleep(2000);
+
+        String[] links = {
+                "pogresanLink",
+                "oprema-za-mobitele-i-tablete",
+                "kucanski-aparati",
+                "laptop-pc-i-oprema",
+                "tv-i-oprema",
+                "multimedija",
+                "auto-oprema",
+                "foto-i-kamere",
+                "kucne-i-kancelarijske-potrepstine",
+                "sport-putovanje-i-slobodno-vrijeme"
+        };
+
+        int i = 1;
+
+        for(String link : links){
+            String finalUrl = baseUrl + "bs/" + link;
+            webDriver.findElement(By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")).click();
+            i++;
+
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            assertEquals(finalUrl, webDriver.getCurrentUrl(), "Test failed because of incorrect link.");
+        }
+        Thread.sleep(2000);
     }
 
     @AfterAll

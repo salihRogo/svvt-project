@@ -56,7 +56,6 @@ public class Scenario2Test {
 
         assertEquals("https://www.univerzalno.com/", webDriver.getCurrentUrl());
         System.out.println("Successfully logged in.");
-
     }
 
     @Test

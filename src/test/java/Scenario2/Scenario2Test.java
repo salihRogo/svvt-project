@@ -136,9 +136,10 @@ public class Scenario2Test {
         WebElement loginButton = webDriver.findElement(By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]"));
         loginButton.click();
 
-        WebElement forgotPasswordButton = webDriver.findElement(By.className("theme-button"));
+        js.executeScript("window.scrollBy(0,400)", "");
+        Thread.sleep(2000);
 
-        js.executeScript("arguments[0].scrollIntoView(true)", forgotPasswordButton);
+        WebElement forgotPasswordButton = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/p/a"));
 
         forgotPasswordButton.click();
         Thread.sleep(2000);

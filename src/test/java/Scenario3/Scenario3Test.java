@@ -12,7 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class ScenarioTest3 {
+public class Scenario3Test {
     private static WebDriver webDriver;
     private static String baseUrl;
 

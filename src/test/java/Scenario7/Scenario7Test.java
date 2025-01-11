@@ -139,7 +139,7 @@ public class Scenario7Test {
         List<WebElement> columnsAgain = headerRowAgain.findElements(By.tagName("th"));
 
         assertEquals(1, columnsAgain.size() - 1);
-        System.out.println("Before deletion, there is 1 item in comparison");
+        System.out.println("After deletion, there is 1 item in comparison");
 
     }
 

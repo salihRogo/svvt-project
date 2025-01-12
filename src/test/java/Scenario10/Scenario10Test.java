@@ -145,6 +145,7 @@ public class Scenario10Test {
         assertTrue(popupModal.isDisplayed());
 
         WebElement closeModal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button"));
+        Thread.sleep(2000);
         closeModal.click();
 
         WebElement quantityInputOfFirstItemInCart2 = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/table/tbody/tr/td[3]/div/form/div/input"));

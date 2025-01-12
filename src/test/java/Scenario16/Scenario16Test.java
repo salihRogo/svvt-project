@@ -27,7 +27,7 @@ public class Scenario16Test {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
         // e.g. path: "C:/Users/John/smth/selenium/chromedriver.exe"
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -55,29 +55,47 @@ public class Scenario16Test {
         searchButton.click();
         Thread.sleep(1000);
 
-        WebElement phone1 = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]"));
+        WebElement phone1 = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]")
+        );
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(1000);
         Actions actions = new Actions(webDriver);
         actions.moveToElement(phone1).perform();
-        WebElement addFirst = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[2]/ul/li[1]/a"));
+        WebElement addFirst = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[2]/ul/li[1]/a")
+        );
         addFirst.click();
         Thread.sleep(1000);
-        WebElement item1AddedText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[2]/span[3]")));
+        WebElement item1AddedText = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("/html/body/div[2]/span[3]")
+                )
+        );
         assertEquals("Artikal dodan u poređenje", item1AddedText.getText());
 
-        WebElement phone2 = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[2]/div/div[2]"));
+        WebElement phone2 = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[2]/div/div[2]")
+        );
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(1000);
         Actions action = new Actions(webDriver);
         actions.moveToElement(phone2).perform();
-        WebElement addSecond = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[2]/div/div[2]/ul/li[1]/a"));
+        WebElement addSecond = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[2]/div/div[2]/ul/li[1]/a")
+        );
         addSecond.click();
         Thread.sleep(1000);
-        WebElement item2AddedText = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[2]/span[3]")));
+        WebElement item2AddedText = wait.until(
+                ExpectedConditions.visibilityOfElementLocated(
+                        By.xpath("/html/body/div[2]/span[3]")
+                )
+        );
         assertEquals("Artikal dodan u poređenje", item2AddedText.getText());
 
-        WebElement compare = webDriver.findElement(By.xpath("/html/body/div/header/div[2]/div[1]/div[3]/div/div[1]"));
+        WebElement compare = webDriver.findElement(
+                By.xpath("/html/body/div/header/div[2]/div[1]/div[3]/div/div[1]")
+        );
         compare.click();
         Thread.sleep(1000);
 
@@ -85,8 +103,13 @@ public class Scenario16Test {
         WebElement headerRow = table.findElement(By.tagName("tr"));
         List<WebElement> columns = headerRow.findElements(By.tagName("th"));
 
-        WebElement comparisonNumberOfItems = webDriver.findElement(By.xpath("html/body/div/header/div[2]/div[1]/div[3]/div/div[1]/a/span[1]"));
-        assertEquals(columns.size() - 1, comparisonNumberOfItems.getText(), "Failed because the number of items added to comparison cart is not the same as displayed on the website.");    // - 1 because of the column containing comparison details
+        WebElement comparisonNumberOfItems = webDriver.findElement(
+                By.xpath("html/body/div/header/div[2]/div[1]/div[3]/div/div[1]/a/span[1]")
+        );
+        assertEquals(
+                columns.size() - 1,
+                comparisonNumberOfItems.getText(),
+                "Failed because the number of items added to comparison cart is not the same as displayed on the website.");    // - 1 because of the column containing comparison details
         Thread.sleep(1000);
     }
 

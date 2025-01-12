@@ -24,7 +24,7 @@ public class Scenario18Test {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
         // e.g. path: "C:/Users/John/smth/selenium/chromedriver.exe"
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
@@ -43,13 +43,20 @@ public class Scenario18Test {
         js.executeScript("window.scrollBy(0,1300)", "");
         Thread.sleep(1000);
 
-        WebElement newsletterInputField = webDriver.findElement(By.xpath("/html/body/div/main/div[5]/div/div/form/input"));
+        WebElement newsletterInputField = webDriver.findElement(
+                By.xpath("/html/body/div/main/div[5]/div/div/form/input")
+        );
         newsletterInputField.sendKeys("salihrogo111@gmail.com");
         Thread.sleep(1000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div/main/div[5]/div/div/form/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div/main/div[5]/div/div/form/button")
+        );
         String buttonType = submitButton.getAttribute("type");
-        System.out.println("The newsletter form is submitted even though it does not look like it on the websites UI. The reason for that is that the button is of type submit.");
+        System.out.println(
+                "The newsletter form is submitted even though it does not look like it on the websites UI. " +
+                "The reason for that is that the button is of type submit."
+        );
         assertEquals("submit", buttonType);
         Thread.sleep(1000);
     }

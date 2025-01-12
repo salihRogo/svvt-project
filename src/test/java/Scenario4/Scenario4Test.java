@@ -1,8 +1,6 @@
 package Scenario4;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -16,6 +14,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Scenario4Test {
     private static WebDriver webDriver;
     private static String baseUrl;
@@ -24,18 +23,16 @@ public class Scenario4Test {
     @BeforeAll
     public static void setUp() {
         System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
-
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         webDriver = new ChromeDriver(options);
-
-        // Maximize the browser window
         webDriver.manage().window().maximize();
         baseUrl = "https://www.univerzalno.com/";
         js = (JavascriptExecutor) webDriver;
     }
 
     @Test
+    @Order(1)
     public void testNavigation() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -58,7 +55,9 @@ public class Scenario4Test {
 
         for(String link : links){
             String finalUrl = baseUrl + "bs/" + link;
-            webDriver.findElement(By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")).click();
+            webDriver.findElement(
+                    By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")
+            ).click();
             i++;
 
             try {
@@ -72,6 +71,7 @@ public class Scenario4Test {
     }
 
     @Test
+    @Order(2)
     public void testNavigationFailed() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -94,7 +94,9 @@ public class Scenario4Test {
 
         for(String link : links){
             String finalUrl = baseUrl + "bs/" + link;
-            webDriver.findElement(By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")).click();
+            webDriver.findElement(
+                    By.xpath("/html/body/div/header/div[3]/div/div[2]/div/div[2]/nav/ul/li[" + i + "]/a")
+            ).click();
             i++;
 
             try {

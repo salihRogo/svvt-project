@@ -1,8 +1,6 @@
 package Scenario12;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,6 +11,7 @@ import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Scenario12Test {
     private static WebDriver webDriver;
     private static String baseUrl;
@@ -22,7 +21,6 @@ public class Scenario12Test {
     @BeforeAll
     public static void setUp() {
         System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
-        // e.g. path: "C:/Users/John/smth/selenium/chromedriver.exe"
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         webDriver = new ChromeDriver(options);
@@ -32,6 +30,7 @@ public class Scenario12Test {
     }
 
     @Test
+    @Order(1)
     public void sessionHandlingWithCookiesDeletionTest() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -51,7 +50,9 @@ public class Scenario12Test {
         password.sendKeys("Mirnanemirna1");
         Thread.sleep(2000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button")
+        );
         submitButton.click();
         Thread.sleep(2000);
 
@@ -68,19 +69,26 @@ public class Scenario12Test {
         System.out.println("Session cookies should be empty after cookies deletion.");
 
         webDriver.navigate().refresh();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]")));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]"))
+        );
 
         Thread.sleep(2000);
-        assertTrue(webDriver.findElement(By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]")).isDisplayed());
+        assertTrue(webDriver.findElement(
+                By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]")).isDisplayed()
+        );
     }
 
     @Test
+    @Order(2)
     public void manualLogoutAndCheckSessionCookies() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
         Thread.sleep(1000);
 
-        WebElement loginButton = webDriver.findElement(By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]"));
+        WebElement loginButton = webDriver.findElement(
+                By.xpath("/html/body/div[1]/header/div[1]/div/div/div/div/a[3]")
+        );
         loginButton.click();
         Thread.sleep(2000);
 
@@ -94,7 +102,9 @@ public class Scenario12Test {
         password.sendKeys("Mirnanemirna1");
         Thread.sleep(2000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button")
+        );
         submitButton.click();
         Thread.sleep(2000);
 
@@ -103,17 +113,21 @@ public class Scenario12Test {
             System.out.println(cookie.getName() + ": " + cookie.getValue());
         }
 
-        WebElement profileButton = webDriver.findElement(By.xpath("/html/body/div/header/div[1]/div/div/div/div[2]/div"));
+        WebElement profileButton = webDriver.findElement(
+                By.xpath("/html/body/div/header/div[1]/div/div/div/div[2]/div")
+        );
         profileButton.click();
         Thread.sleep(2000);
 
-        WebElement logoutButton = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/a[2]"));
+        WebElement logoutButton = webDriver.findElement(
+                By.xpath("/html/body/div/main/div/div/div[1]/a[2]")
+        );
         logoutButton.click();
         Thread.sleep(4000);
 
         // Check for the absence of session cookies
         boolean sessionCookieExists = webDriver.manage().getCookies().stream()
-                .anyMatch(cookie -> cookie.getName().equals("laravel_session")); // Replace with the actual session cookie name
+                .anyMatch(cookie -> cookie.getName().equals("laravel_session"));
 
         assertFalse(sessionCookieExists, "Session cookie should be absent after logout");
 

@@ -8,19 +8,15 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Scenario1Test {
     private static WebDriver webDriver;
     private static String baseUrl;
-
     private static JavascriptExecutor js;
-
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-        // e.g. path: "C:/Users/John/smth/selenium/chromedriver.exe"
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         webDriver = new ChromeDriver(options);
@@ -34,7 +30,9 @@ public class Scenario1Test {
         webDriver.manage().window().maximize();
         Thread.sleep(2000);
 
-        WebElement signUpButton = webDriver.findElement(By.xpath("/html/body/div/header/div[1]/div/div/div/div/a[4]"));
+        WebElement signUpButton = webDriver.findElement(
+                By.xpath("/html/body/div/header/div[1]/div/div/div/div/a[4]")
+        );
         signUpButton.click();
         Thread.sleep(1000);
 
@@ -46,7 +44,7 @@ public class Scenario1Test {
         Thread.sleep(1000);
 
         WebElement emailInputField = webDriver.findElement(By.id("user-email"));
-        emailInputField.sendKeys("abababab@gmail.com");
+        emailInputField.sendKeys("lalalala5@gmail.com");
         Thread.sleep(1000);
 
         WebElement phoneInputField = webDriver.findElement(By.id("user-phone"));
@@ -76,13 +74,17 @@ public class Scenario1Test {
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(1000);
 
-        WebElement submitSignUpButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button"));
+        WebElement submitSignUpButton = webDriver.findElement(
+                By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button")
+        );
         submitSignUpButton.click();
         Thread.sleep(6000);
 
         assertEquals("https://www.univerzalno.com/", webDriver.getCurrentUrl());
 
-        WebElement closeModal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button"));
+        WebElement closeModal = webDriver.findElement(
+                By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button")
+        );
         closeModal.click();
         Thread.sleep(3000);
     }
@@ -93,7 +95,9 @@ public class Scenario1Test {
         webDriver.manage().window().maximize();
         Thread.sleep(2000);
 
-        WebElement signUpButton = webDriver.findElement(By.xpath("/html/body/div/header/div[1]/div/div/div/div/a[4]"));
+        WebElement signUpButton = webDriver.findElement(
+                By.xpath("/html/body/div/header/div[1]/div/div/div/div/a[4]")
+        );
         signUpButton.click();
         Thread.sleep(1000);
 
@@ -135,12 +139,15 @@ public class Scenario1Test {
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(1000);
 
-        WebElement submitSignUpButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button"));
+        WebElement submitSignUpButton = webDriver.findElement(
+                By.xpath("/html/body/div[1]/main/div/div/div/div/div/div[2]/form/div[3]/button")
+        );
         submitSignUpButton.click();
         Thread.sleep(4000);
 
-        assertEquals("https://www.univerzalno.com/bs/showRegistrationForm", webDriver.getCurrentUrl());
-        System.out.println("Registration couldn't be completed because of incorrect email form.");
+        assertEquals("https://www.univerzalno.com", webDriver.getCurrentUrl(),
+                "Registration couldn't be completed because of incorrect email form."
+        );
     }
 
     @AfterAll
@@ -150,6 +157,4 @@ public class Scenario1Test {
             webDriver.quit();
         }
     }
-
-
 }

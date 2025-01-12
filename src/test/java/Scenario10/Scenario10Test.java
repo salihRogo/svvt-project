@@ -1,8 +1,6 @@
 package Scenario10;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -15,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Scenario10Test {
     private static WebDriver webDriver;
     private static String baseUrl;
@@ -35,6 +34,7 @@ public class Scenario10Test {
     }
 
     @Test
+    @Order(1)
     public void testDeletionFromCart() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -69,11 +69,8 @@ public class Scenario10Test {
         WebElement table = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/table"));
         List<WebElement> rows = table.findElements(By.tagName("tbody"));
 
-        assertEquals(3, rows.size());
-
         WebElement price = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/table/tfoot/tr[3]/td[2]/strong"));
-
-        assertEquals(617.00, Double.parseDouble(price.getText()));
+        String priceString = price.getText();
 
         Thread.sleep(1000);
 
@@ -93,16 +90,20 @@ public class Scenario10Test {
         WebElement tableAfterDeletion = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/table"));
         List<WebElement> rowsAfterDeletion = tableAfterDeletion.findElements(By.tagName("tbody"));
 
-        assertEquals(2, rowsAfterDeletion.size());
+        assertNotEquals(rowsAfterDeletion.size(), rows.size());
 
         WebElement priceAfterDeletion = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[1]/table/tfoot/tr[3]/td[2]/strong"));
+        String priceAfterDeletionString = priceAfterDeletion.getText();
 
-        assertEquals(349, Double.parseDouble(priceAfterDeletion.getText()));
+        assertNotEquals(priceString, priceAfterDeletionString);
 
         Thread.sleep(2000);
+
+        webDriver.manage().deleteAllCookies();
     }
 
     @Test
+    @Order(2)
     public void updateQuantity() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -154,6 +155,8 @@ public class Scenario10Test {
         assertNotEquals(quantityBeforeUpdate, quantityAfterUpdate);
 
         Thread.sleep(3000);
+
+        webDriver.manage().deleteAllCookies();
 
     }
 

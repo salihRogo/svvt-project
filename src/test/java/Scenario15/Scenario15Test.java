@@ -41,7 +41,9 @@ public class Scenario15Test {
         webDriver.manage().window().maximize();
         Thread.sleep(2000);
 
-        WebElement dateOnWebsite = webDriver.findElement(By.xpath("/html/body/div/header/div[1]/div/div/ul/li[1]"));
+        WebElement dateOnWebsite = webDriver.findElement(
+                By.xpath("/html/body/div/header/div[1]/div/div/ul/li[1]")
+        );
         String date = dateOnWebsite.getText();
 
         Date currentDate = new Date();

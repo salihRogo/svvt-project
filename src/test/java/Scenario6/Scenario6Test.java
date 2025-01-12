@@ -1,8 +1,6 @@
 package Scenario6;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -14,6 +12,7 @@ import org.openqa.selenium.interactions.Actions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Scenario6Test {
     private static WebDriver webDriver;
     private static String baseUrl;
@@ -21,19 +20,17 @@ public class Scenario6Test {
 
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         webDriver = new ChromeDriver(options);
-
-        // Maximize the browser window
         webDriver.manage().window().maximize();
         baseUrl = "https://www.univerzalno.com/";
         js = (JavascriptExecutor) webDriver;
     }
 
     @Test
+    @Order(1)
     public void testAddToWishList() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -53,7 +50,9 @@ public class Scenario6Test {
         password.sendKeys("Mirnanemirna1");
         Thread.sleep(2000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div/main/div/div/div[2]/div/div/div[2]/form/div[3]/button")
+        );
         submitButton.click();
         Thread.sleep(2000);
 
@@ -68,21 +67,28 @@ public class Scenario6Test {
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(2000);
 
-        WebElement card = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div"));
+        WebElement card = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div")
+        );
 
         Actions actions = new Actions(webDriver);
         actions.moveToElement(card).perform();
 
-        WebElement phone = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[2]/ul/li[2]/a"));
+        WebElement phone = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[2]/ul/li[2]/a")
+        );
         phone.click();
         Thread.sleep(1000);
 
         WebElement addedToCart = webDriver.findElement(By.xpath("/html/body/div[2]/span[3]"));
         assertEquals("Artikal dodan na wish listu", addedToCart.getText().trim());
 
+        webDriver.manage().deleteAllCookies();
+
     }
 
     @Test
+    @Order(2)
     public void testAddToWishListAlreadyExists() throws InterruptedException{
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();

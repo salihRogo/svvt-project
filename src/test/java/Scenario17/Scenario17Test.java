@@ -36,9 +36,6 @@ public class Scenario17Test {
 
     @Test
     public void checkoutTestWithoutAnAccount() throws InterruptedException {
-        // Test steps
-        // Select 1 iphone device, 1 apple watch, go to cart, follow to checkout, fill in the form, click on the order button
-
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
         Thread.sleep(2000);
@@ -54,14 +51,18 @@ public class Scenario17Test {
         orderBy.selectByValue("cheapest");
         Thread.sleep(1500);
 
-        WebElement firstItem = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[3]/div[3]/a"));
+        WebElement firstItem = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[3]/div[3]/a")
+        );
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(2000);
         firstItem.click();
 
         Thread.sleep(1500);
 
-        WebElement closeModal = webDriver.findElement(By.xpath("//*[@id=\"add-to-cart-modal\"]/div/div/div/div[4]/a[2]"));
+        WebElement closeModal = webDriver.findElement(
+                By.xpath("//*[@id=\"add-to-cart-modal\"]/div/div/div/div[4]/a[2]")
+        );
         closeModal.click();
 
         Thread.sleep(1500);
@@ -83,14 +84,18 @@ public class Scenario17Test {
 
         Thread.sleep(1500);
 
-        WebElement secondItem = webDriver.findElement(By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[3]/div[3]/a"));
+        WebElement secondItem = webDriver.findElement(
+                By.xpath("//*[@id=\"search-filters-form\"]/section/div/div/div/div[2]/div[1]/div/div[3]/div[3]/a")
+        );
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(2000);
         secondItem.click();
 
         Thread.sleep(1500);
 
-        WebElement closeModal2AndProceedToCheckout = webDriver.findElement(By.xpath("//*[@id=\"add-to-cart-modal\"]/div/div/div/div[4]/a[1]"));
+        WebElement closeModal2AndProceedToCheckout = webDriver.findElement(
+                By.xpath("//*[@id=\"add-to-cart-modal\"]/div/div/div/div[4]/a[1]")
+        );
         closeModal2AndProceedToCheckout.click();
 
         Thread.sleep(1500);
@@ -127,7 +132,11 @@ public class Scenario17Test {
         Thread.sleep(1000);
 
         WebElement additionalNote = webDriver.findElement(By.id("orderNote"));
-        additionalNote.sendKeys("Ova kupnja je napravljena u svrhu testiranja vase stranice. Testiranje se vrsi za univerzitet, te je nemojte uzimati u razmatranje. Hvala na razumijevanju i izvinjavamo se.");
+        additionalNote.sendKeys(
+                "Ova kupnja je napravljena u svrhu testiranja vase stranice. " +
+                "Testiranje se vrsi za univerzitet, te je nemojte uzimati u razmatranje. " +
+                "Hvala na razumijevanju i izvinjavamo se."
+        );
         Thread.sleep(1000);
 
         WebElement checkBox = webDriver.findElement(By.id("termsOfPurchaseTermsOfUse"));
@@ -141,22 +150,27 @@ public class Scenario17Test {
         cookiesButton.click();
         Thread.sleep(1000);
 
-        WebElement orderButton = webDriver.findElement(By.xpath("//*[@id=\"order-form\"]/div[2]/div/div[6]/button"));
+        WebElement orderButton = webDriver.findElement(
+                By.xpath("//*[@id=\"order-form\"]/div[2]/div/div[6]/button")
+        );
         orderButton.click();
 
         Thread.sleep(3000);
 
-        WebElement orderSuccessMessage = webDriver.findElement(By.xpath("//*[@id=\"exampleModalLabel\"]"));
+        WebElement orderSuccessMessage = webDriver.findElement(
+                By.xpath("//*[@id=\"exampleModalLabel\"]")
+        );
         assertEquals("Narudžba je primljena!", orderSuccessMessage.getText());
 
         Thread.sleep(2000);
 
-        WebElement closeSuccessMessage = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button"));
+        WebElement closeSuccessMessage = webDriver.findElement(
+                By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div/div[3]/button")
+        );
         closeSuccessMessage.click();
 
         String currentUrl = webDriver.getCurrentUrl();
         assertEquals(baseUrl + "bs/thankYou", currentUrl);
-
     }
 
     @AfterAll

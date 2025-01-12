@@ -1,8 +1,6 @@
 package Scenario8;
 
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -13,17 +11,16 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class Scenario8Test {
     private static WebDriver webDriver;
     private static String baseUrl;
 
     private static JavascriptExecutor js;
 
-
     @BeforeAll
     public static void setUp() {
-        System.setProperty("webdriver.chrome.driver", "C:\\Users\\ljilj\\Downloads\\chromedriver-win64\\chromedriver-win64\\chromedriver.exe");
-        // e.g. path: "C:/Users/John/smth/selenium/chromedriver.exe"
+        System.setProperty("webdriver.chrome.driver", "/Users/salihrogo/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--remote-allow-origins=*");
         webDriver = new ChromeDriver(options);
@@ -32,6 +29,7 @@ public class Scenario8Test {
     }
 
     @Test
+    @Order(1)
     public void contactTest() throws InterruptedException {
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -40,7 +38,9 @@ public class Scenario8Test {
         js.executeScript("window.scrollBy(0,4800)", "");
         Thread.sleep(4000);
 
-        WebElement contactButton = webDriver.findElement(By.xpath("/html/body/div/footer/div[2]/div[1]/div/div[2]/div/ul/li[5]"));
+        WebElement contactButton = webDriver.findElement(
+                By.xpath("/html/body/div/footer/div[2]/div[1]/div/div[2]/div/ul/li[5]/a")
+        );
         contactButton.click();
         Thread.sleep(2000);
 
@@ -74,15 +74,20 @@ public class Scenario8Test {
         checkbox.click();
         Thread.sleep(1000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/section[3]/div/div/div[2]/div/form/div/div[7]/div/div/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div[1]/main/section[3]/div/div/div[2]/div/form/div/div[7]/div/div/button")
+        );
         submitButton.click();
-        Thread.sleep(1000);
+        Thread.sleep(4000);
 
-        WebElement modal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div"));
+        WebElement modal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div"));
         assertTrue(modal.isDisplayed());
+
+        Thread.sleep(10000);
     }
 
     @Test
+    @Order(2)
     public void contactTestWithOnlyName() throws InterruptedException{
         webDriver.get(baseUrl);
         webDriver.manage().window().maximize();
@@ -91,7 +96,9 @@ public class Scenario8Test {
         js.executeScript("window.scrollBy(0,4800)", "");
         Thread.sleep(4000);
 
-        WebElement contactButton = webDriver.findElement(By.xpath("/html/body/div/footer/div[2]/div[1]/div/div[2]/div/ul/li[5]"));
+        WebElement contactButton = webDriver.findElement(
+                By.xpath("/html/body/div/footer/div[2]/div[1]/div/div[2]/div/ul/li[5]/a")
+        );
         contactButton.click();
         Thread.sleep(2000);
 
@@ -105,11 +112,15 @@ public class Scenario8Test {
         js.executeScript("window.scrollBy(0,200)", "");
         Thread.sleep(2000);
 
-        WebElement submitButton = webDriver.findElement(By.xpath("/html/body/div[1]/main/section[3]/div/div/div[2]/div/form/div/div[7]/div/div/button"));
+        WebElement submitButton = webDriver.findElement(
+                By.xpath("/html/body/div[1]/main/section[3]/div/div/div[2]/div/form/div/div[7]/div/div/button")
+        );
         submitButton.click();
         Thread.sleep(1000);
 
-        WebElement modal = webDriver.findElement(By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div"));
+        WebElement modal = webDriver.findElement(
+                By.xpath("//*[@id=\"flash-overlay-modal\"]/div/div")
+        );
         assertTrue(modal.isDisplayed());
     }
 
